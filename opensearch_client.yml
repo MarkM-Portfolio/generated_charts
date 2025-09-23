@@ -1,0 +1,20 @@
+image:
+  repository:               hclcr.io/cnx-staging
+
+clusterName:                opensearch-cluster
+nodeGroup:                  "client"
+masterService:              "opensearch-cluster-master"
+pemkeyPass:                 password
+
+roles:
+  - remote_cluster_client
+
+resources:
+  limits:
+    cpu:                    "2"
+    memory:                 "2048Mi"
+  requests:
+    cpu:                    "0.1"
+    memory:                 "1536Mi"
+
+replicas:                   3

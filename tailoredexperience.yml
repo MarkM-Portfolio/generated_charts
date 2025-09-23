@@ -1,0 +1,43 @@
+global:
+  onPrem: true
+  image:
+    repository: hclcr.io/cnx-staging
+
+replicaCount: 1
+
+te-creation-wizard:
+  namespace: connections
+  replicaCount: 1
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/proxy-body-size: 20m
+    enabled: true
+    hosts:
+    - host: "*.internal.cnx-dev.net"
+      paths: []
+    - host: "*.cnx-dev.net"
+      paths: []
+    name: cnx-ingress-tailored-exp
+    tls: []
+
+community-template-service:
+  namespace: connections
+  replicaCount: 1
+
+admin-portal:
+  namespace: connections
+  replicaCount: 1
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /
+    enabled: true
+    hosts:
+    - host: "*.internal.cnx-dev.net"
+      paths: []
+    - host: "*.cnx-dev.net"
+      paths: []
+    name: cnx-ingress-admin-portal
+    tls: []

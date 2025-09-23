@@ -1,0 +1,29 @@
+image:
+  repository:               hclcr.io/cnx-staging
+
+clusterName:                opensearch-cluster
+nodeGroup:                  "master"
+masterService:              "opensearch-cluster-master"
+pemkeyPass:                 password
+
+roles:
+  - master
+
+service:
+  labels:                   {}
+  labelsHeadless:           {}
+  type:                     NodePort
+  nodePort:                 30099
+  nodePortTransport:        ""
+
+createSecret:               false
+
+resources:
+  limits:
+    cpu:                    "1"
+    memory:                 "1024Mi"
+  requests:
+    cpu:                    "0.1"
+    memory:                 "768Mi"
+
+replicas:                   3

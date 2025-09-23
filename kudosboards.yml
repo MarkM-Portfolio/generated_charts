@@ -1,0 +1,128 @@
+# Please read every variable and replace with appropriate value
+# For details of variable meanings, please see https://docs.kudosapps.com/boards/cp/
+
+global:
+  repository: hclcr.io/cnx-staging
+  imagePullSecret: myregkey
+  env:
+    APP_URI: https://c7mmmweb0.cnx-dev.net/boards
+
+minio:
+  image:
+    name: kudosboards-minio
+  nfs:
+    server: 10.254.1.111
+
+app:
+  image:
+    name: kudosboards-boards
+
+notification:
+  image:
+    name: kudosboards-notification
+
+webfront:
+  image:
+    name: kudosboards-webfront
+  env:
+    API_GATEWAY: https://c7mmmweb0.cnx-dev.net/api-boards
+    FORCE_POLLING: "true"
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      kubernetes.io/ingress.class: nginx
+    path: /boards/(.*)
+    # This hostname must match other Ingresses defined in your CP environment
+    # If all ingresses start with * you must match the pattern, or all traffic will be routed to Boards and everything will break
+    # kubectl get ingresses --all-namespaces
+    hosts:
+    - "*.internal.cnx-dev.net"
+    - "*.cnx-dev.net"
+
+core:
+  image:
+    name: kudosboards-core
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      kubernetes.io/ingress.class: nginx
+    path: /api-boards/(.*)
+    # This hostname must match other Ingresses defined in your CP environment
+    # If all ingresses start with * you must match the pattern, or all traffic will be routed to Boards and everything will break
+    # kubectl get ingresses --all-namespaces
+    hosts:
+    - "*.internal.cnx-dev.net"
+    - "*.cnx-dev.net"
+
+licence:
+  image:
+    name: kudosboards-licence
+  env:
+    # Register your Organisation and download your Free 'Activities Plus' licence key from store.kudosapps.com
+    LICENCE: bdNKI/am+9f7EVmF2BP37V7ex03Nrw67pWY3WEAucuWKgImnftCm4whl2yPfDFNEclJ5pd+Sl66g8X8ZchWHuiMdNP5r7IFftlf2tUeUDwEtEWulgSCLiOaFGonqBrjFI2qMHuEOfta0ohmSjlp7RHMIJEaCSzqBNGoAo/mtf6nJSTGmQQGh2L+4K47KrETj9qSo/P34bUY7kqEfz/BNasmrRwfJspURqyx3e22lPBrLTBPtzCcOWCR8q5njDXk7uuGfJGS3weWPdsXZRVJ7tn51Yacs9GeOcexsUiymQY3OoXhCXoGCF8NByn5ItTz4z7DK3cQ93UyEAigskPBvyA==|KtgUE/LweO0+8hBb9cJgn6h425q5j+6AXym93unaGitVaZlUMROcs/FCXCrHfUV0d5Eo+5rGCRJRawnD3D4uGvsce7fIc3VlQP/JvvRH8Eh5Q/TArjKFpIrjkuzgrAkrZQ1+kv2BpUuLmSwWb1loajwsibomd56eWYZLZmwEErbuwuSh3s1FPy8Yw/GX8Pg2qSiZj0OBOWuq4tNl6ByOwU8gHfKA4Vc00Qg4YSDGfXn5xOz93sUh7kPwZuJzldNWjY9uKZRChp26Ybd0Z9WVGmXEYLlyi6OfmU1JvwwLWA9ocUzWuh/C5X+l3IYkdJmpMhd1qbv54hWLP4ockzTTCw==|hU2jBrlaNImBq4lATBrtRFpaLMohZwi724pMhdQQECgh5rlI6qOg4M3CMOIjdNfD5RfkSd6RuxX/zL0Y28vOY6XTxlo7aIsIuUEspMrcAGQn9l9QBiN215vQ4WuBOBT1Ff0rNhOpafPC5Ni6fKKefjRIMjqnt4lq56a/l/ivyVgRgck3MSgix4BuxIVnEeeInAVr06QYxmBa2SptT+y14GEqb1g7DCqFhn0YKHRonQOU3vER1zg5Z2VlH9A5jryTB6HRGcc3qa1rKWANcIRTyiTsgWuCzmFdsuBb4/yYmOsXSJi+Q5b7J/kuKlmCWzNVeYhSC6OjadTxJ5K3kei9QQ==
+
+# https://docs.kudosapps.com/boards/msgraph/teams-on-prem/
+# Uncomment/configure the following 3 lines if you are using this Kudos Boards deployment from Microsoft Teams
+# provider:
+#   env:
+#     MSGRAPH_TEAMS_APP_ID: app-id-shown-in-teams-url
+
+user:
+  image:
+    name: kudosboards-user
+  env:
+    # CONNECTIONS_NAME: HCL Connections
+    CONNECTIONS_CLIENT_ID: kudosboards
+    CONNECTIONS_URL: https://c7mmmweb0.cnx-dev.net
+    CONNECTIONS_CLIENT_SECRET: c3N4zDmv5NMXMLDvDljqsc2QBXllfujlP8L0Gikz9EbZx8JKyaEiWzEcUqFw
+    CONNECTIONS_ADMINS: "[\"admin1@company.example.com\", \"boss2@company.example.com\", \"PROF_GUID_3\"]"
+
+provider:
+  image:
+    name: kudosboards-provider
+
+events:
+  image:
+    name: kudosboards-boards-event
+  env:
+    NOTIFIER_EMAIL_HOST: smtp.example.com
+    NOTIFIER_EMAIL_USERNAME: user123
+    NOTIFIER_EMAIL_PASSWORD: passw0rd
+    # NOTIFIER_EMAIL_FROM_NAME: Kudos Boards
+    # NOTIFIER_EMAIL_FROM_EMAIL: boards@connections.example.com
+
+migration:
+  image:
+    name: kudosboards-activity-migration
+  env:
+    API_GATEWAY: https://c7mmmweb0.cnx-dev.net/api-boards
+    CONNECTIONS_ACTIVITIES_ADMIN_USERNAME: connectionsadmin
+    CONNECTIONS_ACTIVITIES_ADMIN_PASSWORD: adminpassword
+    CONNECTIONS_DB_HOST: c7mmmdb0.internal.cnx-dev.net
+    CONNECTIONS_DB_USER: LCUSER
+    CONNECTIONS_DB_PASSWORD: password
+
+    # -------- DB2 variables ------------
+    CONNECTIONS_DB_TYPE: db2
+    CONNECTIONS_DB_PORT: 50000
+    # Connection string is built from other variables:
+    # CONNECTIONS_DB_CONNECT_STRING: HOSTNAME=${host};PORT=${port};PROTOCOL=TCPIP;UID=${user};PWD=${password};CHARSET=UTF8;
+
+    # -------- Microsoft variables -------
+    # CONNECTIONS_DB_TYPE: mssql
+    # CONNECTIONS_DB_PORT: 1433
+    # CONNECTIONS_DB_DOMAIN: domain
+
+    # -------- Oracle variables ----------
+    # CONNECTIONS_DB_TYPE: oracle
+    # CONNECTIONS_DB_PORT: 1531
+    # CONNECTIONS_DB_SID: DATABASE
+    # Connection string is built from other variables:
+    # CONNECTIONS_DB_CONNECT_STRING: ${host}:${port}/${sid}
+
+    # -------- Other options -------------
+    # PROCESSING_PAGE_SIZE: 10
+    # PROCESSING_LOG_EVERY: 50
+    # IMMEDIATELY_PROCESS_ALL: false
+    # COMPLETE_ACTIVITY_AFTER_MIGRATED: false
+    # CREATE_LINK_IN_ACTIVITY_AFTER_MIGRATED: false

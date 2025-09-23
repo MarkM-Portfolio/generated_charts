@@ -1,0 +1,4 @@
+nfs:
+  server: 10.254.1.111
+persistentVolumePath: /pv-connections
+namespace: connections

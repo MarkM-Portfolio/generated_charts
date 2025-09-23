@@ -1,0 +1,17 @@
+env:
+  set_ic_admin_user: wasadmin
+  set_ic_admin_password: password
+  set_ic_internal: c7mmmconnections0.internal.cnx-dev.net
+  set_master_ip: c7mmmweb0.internal.cnx-dev.net
+  set_elasticsearch_ca_password: password
+  set_elasticsearch_key_password: password
+  set_redis_secret: password
+  set_search_secret: password
+  set_solr_secret: password
+  skip_configure_redis: false
+  set_opensearch_ca_password: password
+  set_opensearch_key_password: password
+image:
+  repository: hclcr.io/cnx-staging
+replicaCount: 1
+namespace: connections

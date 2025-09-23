@@ -1,0 +1,14 @@
+**/bootstrap.yml linguist-language=Kubernetes linguist-vendored=false
+**/connections-env.yml linguist-language=Kubernetes linguist-vendored=false
+**/connections-volumes.yml linguist-language=Kubernetes linguist-vendored=false
+**/customizer.yml linguist-language=Kubernetes linguist-vendored=false
+**/infrastructure.yml linguist-language=Kubernetes linguist-vendored=false
+**/kudosboards.yml linguist-language=Kubernetes linguist-vendored=false
+**/opensearch_client.yml linguist-language=Kubernetes linguist-vendored=false
+**/opensearch_data.yml linguist-language=Kubernetes linguist-vendored=false
+**/opensearch_master.yml linguist-language=Kubernetes linguist-vendored=false
+**/orientme.yml linguist-language=Kubernetes linguist-vendored=false
+**/outlook-addin.yml linguist-language=Kubernetes linguist-vendored=false
+**/tailoredexperience.yml linguist-language=Kubernetes linguist-vendored=false
+**/teams.yml linguist-language=Kubernetes linguist-vendored=false
+*.gitignore linguist-language=Git linguist-vendored=false

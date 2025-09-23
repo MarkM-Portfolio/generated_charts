@@ -1,0 +1,58 @@
+global:
+  onPrem: true
+  image:
+    repository: hclcr.io/cnx-staging
+haproxy:
+  namespace: connections
+  replicaCount: 1
+redis:
+  namespace: connections
+  replicaCount: 1
+redis-sentinel:
+  namespace: connections
+  replicaCount: 1
+mongodb:
+  namespace: connections
+  createSecret: false
+  replicaCount: 1
+mongo5:
+  clusterDomain: cluster.local
+  namespace: connections
+  createSecret: false
+  replicaCount: 1
+appregistry-client:
+  namespace: connections
+  replicaCount: 1
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+    enabled: true
+    hosts:
+    - host: "*.internal.cnx-dev.net"
+      paths: []
+    - host: "*.cnx-dev.net"
+      paths: []
+    name: cnx-ingress-appreg
+    tls: []
+appregistry-service:
+  namespace: connections
+  deploymentType: hybrid_cloud
+  replicaCount: 1
+middleware-jsonapi:
+  namespace: connections
+  replicaCount: 1
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /
+    enabled: true
+    hosts:
+    - host: "*.internal.cnx-dev.net"
+      paths: []
+    - host: "*.cnx-dev.net"
+      paths: []
+    name: cnx-ingress-jsonapi
+    tls: []
+replicaCount: 1
+

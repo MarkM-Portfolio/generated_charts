@@ -1,0 +1,5 @@
+image:
+  repository: hclcr.io/cnx-staging
+deploymentType: hybrid_cloud
+replicaCount: 1
+namespace: connections
